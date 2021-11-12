@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>piano</title>
+    <style>
+        body{
+            background-color: rgb(14, 105, 105);
+            min-height: 100vh;
+            margin:0px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #outer{
+            display:flex;
+            /*justify-content: center;
+            align-items: center;*/
+            
+            border: 2px solid black;
+           
+            
+        }
+        .white
+        {
+            height:200px;
+            width:80px;
+            border: 2px solid rgb(0, 0, 0);
+            z-index: 2;
+            background-color: white;
+            
+        }
+        .blackkey{
+
+            height:100px;
+            width:60px;
+            z-index: 4;
+            margin-left: -30px;
+            margin-right: -30px;
+            background-color: black;
+            
+    
+
+        }
+        .white.active
+        {
+            background-color: rgb(129, 120, 120);
+        }
+
+c
+    </style>
+    
+
+</head>
+<body>
+    <div id="outer">
+    <div data-note='a' class="key white">
+        1
+
+    </div>
+    <div  class="blackkey">
+        2
+        
+    </div>
+    <div data-note='b' class="key white"> 
+        3
+        
+    </div>
+    <div data-note='c' class="key white"> 
+        4
+        
+    </div>
+    <div data-note='d' class="key white"> 
+        5
+        
+    </div>
+    <div  class="blackkey">
+        6
+        
+    </div>
+    <div data-note='e' class="key white">
+        7
+        
+    </div>
+</div>
+<audio id='a' src="notes/aa.wav"></audio>
+<audio id='b' src="notes/bb.wav"> </audio>
+<audio id='c' src="notes/dd.wav"></audio>
+<audio id='d' src="notes/ed.wav"></audio>
+<audio id='e' src="notes/gg.wav"></audio>
+<script>
+    const WHITE_KEYS = ['z', 'x', 'c', 'v', 'b']
+
+const keys = document.querySelectorAll('.key')
+const whiteKeys = document.querySelectorAll('.key.white')
+
+
+keys.forEach(key => {
+  key.addEventListener('click', () => playNote(key))
+})
+
+document.addEventListener('keydown', e => {
+  if (e.repeat) return
+  const key = e.key
+  const whiteKeyIndex = WHITE_KEYS.indexOf(key)
+
+  if (whiteKeyIndex > -1) playNote(whiteKeys[whiteKeyIndex])
+})
+
+function playNote(key) {
+  const noteAudio = document.getElementById(key.dataset.note)
+  noteAudio.currentTime = 0
+  noteAudio.play()
+  key.classList.add('active')
+  noteAudio.addEventListener('ended', () => {
+    key.classList.remove('active')
+  })
+}
+</script>
+    
+</body>
+</html>
